@@ -14,9 +14,7 @@ const Contact = require('../models/Contact');
  */
 router.get('/', isAuth, async (req, res) => {
   try {
-    const contacts = await Contact.find({ user: req.user.id }).sort({
-      date: -1
-    });
+    const contacts = await Contact.find({ user: req.user.id });
 
     res.json(contacts);
   } catch (err) {
@@ -114,8 +112,6 @@ router.delete('/:id', isAuth, async (req, res) => {
   try {
     const contactId = req.params.id;
 
-    console.log(contactId);
-
     let contact = await Contact.findById(contactId);
 
     if (!contact) return res.status(404).json({ msg: 'Contact not found' });
@@ -125,7 +121,6 @@ router.delete('/:id', isAuth, async (req, res) => {
       return res.status(401).json({ msg: 'Not authorized' });
     }
 
-    console.log(contact);
     await Contact.findOneAndDelete(contactId);
 
     res.json({ msg: 'Contact removed' });
