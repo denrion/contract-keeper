@@ -112,7 +112,11 @@ router.put('/:id', [isAuth], async (req, res) => {
  */
 router.delete('/:id', isAuth, async (req, res) => {
   try {
-    let contact = await Contact.findById(req.params.id);
+    const contactId = req.params.id;
+
+    console.log(contactId);
+
+    let contact = await Contact.findById(contactId);
 
     if (!contact) return res.status(404).json({ msg: 'Contact not found' });
 
@@ -121,7 +125,8 @@ router.delete('/:id', isAuth, async (req, res) => {
       return res.status(401).json({ msg: 'Not authorized' });
     }
 
-    await Contact.findOneAndRemove(req.params.id);
+    console.log(contact);
+    await Contact.findOneAndDelete(contactId);
 
     res.json({ msg: 'Contact removed' });
   } catch (err) {

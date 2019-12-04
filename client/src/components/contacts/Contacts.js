@@ -20,7 +20,7 @@ const Contacts = () => {
 
   return (
     <Fragment>
-      {contacts !== null && !loading ? (
+      {contacts && !loading ? (
         <TransitionGroup>
           {(filtered ? filtered : contacts).map(contact => (
             <CSSTransition key={contact._id} timeout={500} classNames='item'>
